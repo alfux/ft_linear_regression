@@ -2,5 +2,7 @@
 # define HEADER_HPP
 
 # include <iostream>
+# include <Prompt.hpp>
+# include <Error.hpp>
 
 #endif

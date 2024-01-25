@@ -1,4 +1,4 @@
-SRC		:=	main.cpp
+SRC		:=	main.cpp Prompt.cpp Error.cpp
 
 OBJ		:=	$(SRC:%.cpp=%.o)
 
@@ -8,7 +8,9 @@ CFLAGS	+=	-Wall -Wextra -Werror -Wshadow -g -I$(HDR)
 
 CC		:=	c++
 
-NAME	:=	ft_linear_regression
+NAME	:=	Predict
+
+TNAME	:=	Training
 
 all		:	$(NAME)
 
