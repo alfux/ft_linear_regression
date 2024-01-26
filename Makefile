@@ -1,10 +1,16 @@
-SRC		:=	main.cpp Prompt.cpp Error.cpp
+DIR		:=	.
 
-OBJ		:=	$(SRC:%.cpp=%.o)
+HDR		:=	Prompt.hpp Error.hpp
 
-HDR		:=	$(shell pwd)
+SRC		:=	Prompt.cpp Error.cpp main.cpp
 
-CFLAGS	+=	-Wall -Wextra -Werror -Wshadow -g -I$(HDR)
+HDR		:=	$(HDR:%.hpp=$(DIR)/hdr/%.hpp)
+
+SRC		:=	$(SRC:%.cpp=$(DIR)/src/%.cpp)
+
+OBJ		:=	$(SRC:$(DIR)/src/%.cpp=$(DIR)/obj/%.o)
+
+CFLAGS	+=	-Wall -Wextra -Werror -Wshadow -g -I$(DIR)/hdr
 
 CC		:=	c++
 
@@ -17,11 +23,14 @@ all		:	$(NAME)
 $(NAME)	:	$(OBJ)
 			$(CC) $(CFLAGS) $^ -o $@
 
-%.o		:	%.cpp $(HDR)
-			$(CC) $(CFLAGS) -c $< -o $@
+$(DIR)/obj/%.o		:	./src/%.cpp ./obj $(HDR)
+					$(CC) $(CFLAGS) -c $< -o $@
+
+./obj	:
+			mkdir obj
 
 clean	:
-			rm -rf $(OBJ)
+			rm -rf ./obj
 
 fclean	:	clean
 			rm -rf $(NAME)

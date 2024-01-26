@@ -1,9 +1,9 @@
-#include <header.hpp>
+#include <Prompt.hpp>
+#include <Error.hpp>
 
 int	predict(void)
 {
-	Prompt	prompt;
-
+	std::cout << Prompt().input() << std::endl; 
 	return (0);
 }
 

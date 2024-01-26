@@ -4,6 +4,8 @@
 # include <exception>
 # include <iostream>
 
+/*	A class to quickly deal with exceptions and error messages */
+
 class	Error: public std::exception
 {
 	char const	*wht;
@@ -13,6 +15,7 @@ class	Error: public std::exception
 	public:
 		Error(void);
 		Error(Error const &cpy);
+		Error(char const *whr);
 		Error(int cde, char const *wht, char const *whr);
 		Error(std::exception const &e);
 		~Error(void) throw();

@@ -9,6 +9,10 @@ Error::Error(void):
 Error::Error(Error const &cpy):
 	std::exception(cpy), wht(cpy.wht), whr(cpy.whr), code(cpy.code) {}
 
+//	Default error with location
+Error::Error(char const *whr):
+	wht(strerror(errno)), whr(whr), code(errno) {}
+
 //	Personalised error code, message and location
 Error::Error(int cde, char const *wht, char const *whr):
 	wht(wht), whr(whr), code(cde) {}
