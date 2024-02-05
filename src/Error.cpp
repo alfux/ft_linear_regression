@@ -55,7 +55,7 @@ int	Error::getCode(void) const throw()
 //	Prints error on stderr and returns status code
 int	Error::print(void) const throw()
 {
-	std::cerr << "error: ";
+	std::cerr << std::endl << "error: ";
 	if (*this->whr)
 		std::cerr << this->whr << ": ";
 	if (*this->wht)
@@ -74,7 +74,7 @@ int	Error::print(std::exception const &e) throw()
 	}
 	catch (...)
 	{
-		std::cerr << "error: " << e.what() << std::endl;
+		std::cerr << std::endl << "error: " << e.what() << std::endl;
 		return (errno ? errno : 1);
 	}
 }
