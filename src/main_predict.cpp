@@ -10,7 +10,7 @@ static double	estimatePrice(double mileage)
 	double			t1;
 
 	if (!data.is_open())
-		throw (Error(2, "couldn't open file", ".data"));
+		return (0);
 	std::getline(data, line);
 	t0 = std::stod(line);
 	std::getline(data, line);
@@ -26,7 +26,7 @@ static int	predict()
 	std::cout << "mileage: ";
 	prompt.input();
 	mileage = std::stod(prompt.get());
-	std::cout << "estimated price: " << estimatePrice(mileage) << " (" << mileage << ")"  << std::endl;
+	std::cout << "price: " << estimatePrice(mileage) << std::endl;
 	return (0);
 }
 
