@@ -1,5 +1,6 @@
 #include <fstream>
 #include <cmath>
+#include <Plot.hpp>
 #include <Error.hpp>
 
 #define EPSILON 0.000001
@@ -82,28 +83,49 @@ static void	save(double *theta)
 	save << theta[0] << std::endl << theta[1] << std::endl;
 }
 
-int	main(void)
+static double	estimate(double mileage)
 {
-	try
-	{
-		double	theta[2];
-		double	last_theta[2];
+	std::ifstream	data("./.data");
+	std::string		line;
+	double			t0;
+	double			t1;
 
-		theta[0] = 0;
-		theta[1] = 0;
+	if (!data.is_open())
+		return (0);
+	std::getline(data, line);
+	t0 = std::stod(line);
+	std::getline(data, line);
+	t1 = std::stod(line);
+	return (t0 + t1 * mileage);
+}
+
+int	main(int ac, char **av)
+{
+	try {
+		Plot			plot;
+		double			theta[2] = {0, 0};
+		double			last_theta[2] = {0, 0};
+		uint32_t		argb = 0xff00ffff;
+		std::ifstream	dots("./data.csv");
+
+		if (ac != 1)
+			throw (Error(1, "no arguments authorized", *(av + 1)));
+		if (!dots.is_open())
+			throw (Error(2, "couldn't open file", "data.csv"));
+		plot.calibrate("./data.csv");
+		plot.drawAxis(0xffffffff);
+		plot.drawDots("./data.csv", 0xffff0000);
 		do {
 			last_theta[0] = theta[0];
 			last_theta[1] = theta[1];
 			learn(theta);
-			std::cout << "theta0 " << theta[0] << ", theta1 " << theta[1] << std::endl;
+			save(theta);
+			plot.drawFunction(&estimate, argb);
+			plot.draw();
+			argb += 0x00110000 - 0x00001111;
 		} while (sqrt(pow(theta[0] - last_theta[0], 2) + pow(theta[1] - last_theta[1], 2)) > EPSILON);
-		std::cout << "Final computed parameters:" << std::endl
-			<< "theta0: " << theta[0] << std::endl
-			<< "theta1: " << theta[1] << std::endl;
-		save(theta);
-	}
-	catch (std::exception const &e)
-	{
+		plot.wait();
+	} catch (std::exception const &e) {
 		return (Error::print(e));
 	}
 	return (0);
