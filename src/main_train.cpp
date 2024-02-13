@@ -105,7 +105,6 @@ int	main(int ac, char **av)
 		Plot			plot;
 		double			theta[2] = {0, 0};
 		double			last_theta[2] = {0, 0};
-		uint32_t		argb = 0xff00ffff;
 		std::ifstream	dots;
 
 		if (ac != 2)
@@ -121,10 +120,11 @@ int	main(int ac, char **av)
 			last_theta[1] = theta[1];
 			learn(theta);
 			save(theta);
-			plot.drawFunction(&estimate, argb);
+			plot.drawFunction(&estimate, 0xff333333);
 			plot.draw();
-			argb += 0x00110000 - 0x00001111;
 		} while (sqrt(pow(theta[0] - last_theta[0], 2) + pow(theta[1] - last_theta[1], 2)) > EPSILON);
+		plot.drawFunction(&estimate, 0xffff0000);
+		plot.draw();
 		plot.wait();
 	} catch (std::exception const &e) {
 		return (Error::print(e));

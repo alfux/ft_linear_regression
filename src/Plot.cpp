@@ -173,6 +173,9 @@ void	Plot::drawFunction(double (*f)(double), uint32_t argb)
 		coord = this->toCoord(x,
 			f(x * this->pv_max_x / this->pv_width) * this->pv_height / this->pv_max_y);
 		this->colorPixel(coord.x, coord.y, argb);
+		this->colorPixel(coord.x + 1, coord.y, argb);
+		this->colorPixel(coord.x + 1, coord.y + 1, argb);
+		this->colorPixel(coord.x, coord.y + 1, argb);
 	}
 	SDL_UpdateTexture(this->pv_canvas, nullptr, this->pv_pixels,
 		this->pv_width * sizeof (uint32_t));
