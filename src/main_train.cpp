@@ -106,15 +106,16 @@ int	main(int ac, char **av)
 		double			theta[2] = {0, 0};
 		double			last_theta[2] = {0, 0};
 		uint32_t		argb = 0xff00ffff;
-		std::ifstream	dots("./data.csv");
+		std::ifstream	dots;
 
-		if (ac != 1)
-			throw (Error(1, "no arguments authorized", *(av + 1)));
+		if (ac != 2)
+			throw (Error(1, "bad arguments", *av));
+		dots.open(*(av + 1));
 		if (!dots.is_open())
-			throw (Error(2, "couldn't open file", "data.csv"));
-		plot.calibrate("./data.csv");
+			throw (Error(2, "couldn't open file", *(av + 1)));
+		plot.calibrate(*(av + 1));
 		plot.drawAxis(0xffffffff);
-		plot.drawDots("./data.csv", 0xffff0000);
+		plot.drawDots(*(av + 1), 0xffff0000);
 		do {
 			last_theta[0] = theta[0];
 			last_theta[1] = theta[1];
