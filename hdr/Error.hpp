@@ -2,6 +2,7 @@
 # define ERROR_HPP
 
 # include <exception>
+# include <cstring>
 # include <iostream>
 
 /*	A class to quickly deal with exceptions and error messages */
